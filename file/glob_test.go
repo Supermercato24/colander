@@ -13,14 +13,19 @@ import (
 func TestGlob(t *testing.T) {
 	assert.Exactly(t, config.Name, config.Name, "load init")
 
-	Glob(filepath.Join(configuration.DirBinStorage, configuration.PathLogs), func(matches GlobMatches) {
+	var day, d2, month bool
+
+	Glob(filepath.Join(configuration.DirBinStorage, configuration.PathLogs), func(matches *GlobMatches) {
 		for filesKey, match := range matches.Files {
 			if filesKey == "day" {
 				assert.Exactly(t, "day", filesKey)
+				day = true
 			} else if filesKey == "d2" {
 				assert.Exactly(t, "d2", filesKey)
+				d2 = true
 			} else {
 				assert.Exactly(t, "month", filesKey)
+				month = true
 			}
 			assert.Exactly(t, match.Category, filesKey)
 
@@ -35,4 +40,8 @@ func TestGlob(t *testing.T) {
 			}
 		}
 	})
+
+	assert.True(t, day)
+	assert.True(t, d2)
+	assert.True(t, month)
 }
