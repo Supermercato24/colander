@@ -86,10 +86,6 @@ func TestSortByTimestamp(t *testing.T) {
 		assert.Exactly(t, dailyLog1, match.Category)
 
 		for _, match := range match.Logs {
-			if match.Day != 11 {
-				continue
-			}
-
 			assert.Exactly(t, int64(11), match.Day)
 			logs := LogReadLines(match.Paths)
 			assert.NotEmpty(t, logs)
@@ -143,8 +139,6 @@ func TestSortByTimestamp(t *testing.T) {
 			}
 			assert.Exactly(t, ops, numberOfLines)
 			fd.Close()
-
-			break
 		}
 	})
 }

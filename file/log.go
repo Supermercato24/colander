@@ -9,6 +9,7 @@ import (
 
 const (
 	LogExtension = ".log"
+	NewLine      = '\n'
 )
 
 type Log struct {
@@ -18,7 +19,6 @@ type Log struct {
 
 var (
 	timestampRegex = regexp.MustCompile(`[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}`)
-	newLine        = []byte("\n")
 )
 
 // Try to detect timestamp from body with regex and time parser
@@ -42,12 +42,11 @@ func LogReadLines(logFiles []string) []Log {
 		if err != nil {
 			panic(err)
 		}
-		defer fd.Close()
 
 		reader := bufio.NewReader(fd)
 
 		for {
-			line, _, err := reader.ReadLine()
+			line, err := reader.ReadBytes(NewLine)
 			if err != nil {
 				break
 			}
@@ -62,6 +61,7 @@ func LogReadLines(logFiles []string) []Log {
 			}
 			logs = append(logs, log)
 		}
+		fd.Close()
 	}
 
 	return logs
@@ -82,7 +82,6 @@ func LogWriteLines(path string, logs []Log) (err error) {
 		if err != nil {
 			return
 		}
-		writer.Write(newLine)
 	}
 	writer.Flush()
 

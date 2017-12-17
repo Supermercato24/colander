@@ -14,7 +14,6 @@ const (
 	dailyLog0   = "day"
 	dailyLog1   = "d2"
 	monthlyLog0 = "month"
-	monthlyLog1 = "m2"
 )
 
 func TestGlob(t *testing.T) {

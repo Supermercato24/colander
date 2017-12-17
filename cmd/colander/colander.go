@@ -23,7 +23,7 @@ func Colander(options *ColanderOptions) {
 	if options.show {
 		showClosure = func(_ string, logs file.Aggregate) {
 			for _, log := range logs {
-				fmt.Println(string(log.Body))
+				fmt.Print(string(log.Body))
 			}
 		}
 	} else {
