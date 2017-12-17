@@ -103,11 +103,14 @@ func logReadline(t *testing.T) {
 			if match.Day != 11 {
 				continue
 			}
+
 			assert.Exactly(t, int64(11), match.Day)
-			logs := LogReadline(match.Paths)
+			logs := LogReadLines(match.Paths)
 			assert.NotEmpty(t, logs)
 
 			assert.Len(t, logs, numberOfLines)
+
+			break
 		}
 	})
 }

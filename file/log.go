@@ -18,6 +18,7 @@ type Log struct {
 
 var (
 	timestampRegex = regexp.MustCompile(`[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}`)
+	newLine        = []byte("\n")
 )
 
 // Try to detect timestamp from body with regex and time parser
@@ -33,13 +34,13 @@ func detectTimestamp(line []byte) (timestampDetected time.Time) {
 	return
 }
 
-func LogReadline(logFiles []string) []Log {
+func LogReadLines(logFiles []string) []Log {
 	var logs []Log
 
 	for _, logFile := range logFiles {
 		fd, err := os.Open(logFile)
 		if err != nil {
-			return nil
+			panic(err)
 		}
 		defer fd.Close()
 
@@ -64,4 +65,25 @@ func LogReadline(logFiles []string) []Log {
 	}
 
 	return logs
+}
+
+func LogWriteLines(path string, logs []Log) (err error) {
+	fd, err := os.OpenFile(path, os.O_CREATE|os.O_WRONLY, 0644)
+	if err != nil {
+		return
+	}
+	defer fd.Close()
+
+	writer := bufio.NewWriter(fd)
+
+	for _, log := range logs {
+		_, err = writer.Write(log.Body)
+		if err != nil {
+			return
+		}
+		writer.Write(newLine)
+	}
+	writer.Flush()
+
+	return
 }
