@@ -26,7 +26,7 @@ type LogMatches struct {
 	Month int64
 	Day   int64
 	Time  time.Time
-	Logs  []string
+	Paths []string
 }
 
 func splitLogFilesByName(pattern string) *GlobMatches {
@@ -69,12 +69,12 @@ func splitLogFilesByName(pattern string) *GlobMatches {
 			int(logMatches.Year), time.Month(logMatches.Month), int(logMatches.Day),
 			0, 0, 0, 0, time.UTC)
 		if _, ok := fileMatches.Logs[logMatches.Time]; !ok {
-			logMatches.Logs = make([]string, 0)
+			logMatches.Paths = make([]string, 0)
 			fileMatches.Logs[logMatches.Time] = logMatches
 		}
 		logMatches = fileMatches.Logs[logMatches.Time]
 
-		logMatches.Logs = append(logMatches.Logs, match)
+		logMatches.Paths = append(logMatches.Paths, match)
 	}
 
 	return globMatches

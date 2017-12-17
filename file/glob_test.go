@@ -10,31 +10,42 @@ import (
 	"supermercato24.it/configuration"
 )
 
-func TestGlob(t *testing.T) {
-	assert.Exactly(t, config.Name, config.Name, "load init")
+const (
+	dailyLog0   = "day"
+	dailyLog1   = "d2"
+	monthlyLog0 = "month"
+	monthlyLog1 = "m2"
+)
 
+func TestGlob(t *testing.T) {
 	var day, d2, month bool
 
+	assert.Exactly(t, config.Name, config.Name, "load init")
 	Glob(filepath.Join(configuration.DirBinStorage, configuration.PathLogs), func(matches *GlobMatches) {
 		for filesKey, match := range matches.Files {
-			if filesKey == "day" {
-				assert.Exactly(t, "day", filesKey)
+			if filesKey == dailyLog0 {
+				assert.Exactly(t, dailyLog0, filesKey)
 				day = true
-			} else if filesKey == "d2" {
-				assert.Exactly(t, "d2", filesKey)
+			} else if filesKey == dailyLog1 {
+				assert.Exactly(t, dailyLog1, filesKey)
 				d2 = true
 			} else {
-				assert.Exactly(t, "month", filesKey)
+				assert.Exactly(t, monthlyLog0, filesKey)
 				month = true
 			}
 			assert.Exactly(t, match.Category, filesKey)
 
 			for logsKey, match := range match.Logs {
 				assert.Exactly(t, int64(2017), match.Year)
+				if filesKey == monthlyLog0 {
+					assert.Exactly(t, int64(0), match.Day)
+				} else {
+					assert.Exactly(t, int64(12), match.Month)
+				}
 				assert.IsType(t, time.Time{}, logsKey)
-				assert.NotZero(t, len(match.Logs))
+				assert.NotZero(t, len(match.Paths))
 
-				for _, match := range match.Logs {
+				for _, match := range match.Paths {
 					assert.True(t, filepath.IsAbs(match))
 				}
 			}
