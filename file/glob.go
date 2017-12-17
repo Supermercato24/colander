@@ -9,7 +9,8 @@ import (
 )
 
 const (
-	splitAfter = 2
+	splitAfter  = 2
+	globPattern = "*-[0-9][0-9][0-9][0-9]*-*"
 )
 
 type GlobMatches struct {
@@ -37,7 +38,7 @@ func splitLogFilesByName(pattern string) *GlobMatches {
 
 	matches, _ = filepath.Glob(pattern)
 	for _, match := range matches {
-		matchWithoutExtension := strings.TrimSuffix(match, filepath.Ext(logExtension))
+		matchWithoutExtension := strings.TrimSuffix(match, filepath.Ext(LogExtension))
 
 		_, file := filepath.Split(matchWithoutExtension)
 		title := strings.SplitN(file, "-", splitAfter)
@@ -80,7 +81,7 @@ func splitLogFilesByName(pattern string) *GlobMatches {
 	return globMatches
 }
 
-func Glob(dirPath string, f func(matches *GlobMatches)) {
+func Glob(dirPath string, pattern string, f func(matches *GlobMatches)) {
 	// pay_debug-2017-11-15-ws02.log
 	// pay_debug-2017-11-15-ws01.log
 	// pay_debug-2017-11-15-ws03.log
@@ -96,8 +97,12 @@ func Glob(dirPath string, f func(matches *GlobMatches)) {
 
 	// {"pay_debug": {"2017-11-15":["pay_debug-2017-11-15-ws01.log","pay_debug-2017-11-15-ws02.log"]}}
 
-	dirPath = filepath.Clean(dirPath)
-	monthlyAndDailyLog := fmt.Sprintf("%s/*-[0-9][0-9][0-9][0-9]*-*%s", dirPath, logExtension)
+	if pattern == "" {
+		pattern = fmt.Sprintf("%s%s", globPattern, LogExtension)
+	}
+	if dirPath != "" {
+		pattern = fmt.Sprintf("%s/%s", filepath.Clean(dirPath), pattern)
+	}
 
-	f(splitLogFilesByName(monthlyAndDailyLog))
+	f(splitLogFilesByName(pattern))
 }

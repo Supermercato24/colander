@@ -21,7 +21,7 @@ func TestGlob(t *testing.T) {
 	var day, d2, month bool
 
 	assert.Exactly(t, config.Name, config.Name, "load init")
-	Glob(filepath.Join(configuration.DirBinStorage, configuration.PathLogs), func(matches *GlobMatches) {
+	Glob(filepath.Join(configuration.DirBinStorage, configuration.PathLogs), "", func(matches *GlobMatches) {
 		for filesKey, match := range matches.Files {
 			if filesKey == dailyLog0 {
 				assert.Exactly(t, dailyLog0, filesKey)

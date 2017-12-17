@@ -86,16 +86,24 @@ func logSetUp(t *testing.T, logNumber int) {
 	assert.NotEmpty(t, dailyLogFile)
 	assert.NotEmpty(t, dailyLogBody)
 
-	fd, err := os.OpenFile(filepath.Join(configuration.DirBinStorage, configuration.PathLogs, dailyLogFile), os.O_CREATE|os.O_WRONLY, 0644)
+	outputFile := filepath.Join(configuration.DirBinStorage, configuration.PathLogs, dailyLogFile)
+	os.Remove(outputFile)
+	fd, err := os.OpenFile(outputFile, os.O_CREATE|os.O_WRONLY, 0644)
 	assert.NoError(t, err)
+
+	//_, err = fd.Seek(int64(64), 0)
+	//assert.NoError(t, err)
+
 	n, err := fd.Write(dailyLogBody)
 	assert.NoError(t, err)
 	assert.NotZero(t, n)
-	fd.Close()
+
+	err = fd.Close()
+	assert.NoError(t, err)
 }
 
 func logReadline(t *testing.T) {
-	Glob(filepath.Join(configuration.DirBinStorage, configuration.PathLogs), func(matches *GlobMatches) {
+	Glob(filepath.Join(configuration.DirBinStorage, configuration.PathLogs), "", func(matches *GlobMatches) {
 		match := matches.Files[dailyLog1]
 		assert.Exactly(t, dailyLog1, match.Category)
 
@@ -111,6 +119,19 @@ func logReadline(t *testing.T) {
 			assert.Len(t, logs, numberOfLines)
 
 			break
+		}
+	})
+
+	Glob(filepath.Join(configuration.DirBinStorage, configuration.PathLogs), "*2017-12-11*.log", func(matches *GlobMatches) {
+		match := matches.Files[dailyLog1]
+		assert.Exactly(t, dailyLog1, match.Category)
+
+		for _, match := range match.Logs {
+			assert.Exactly(t, int64(11), match.Day)
+			logs := LogReadLines(match.Paths)
+			assert.NotEmpty(t, logs)
+
+			assert.Len(t, logs, numberOfLines)
 		}
 	})
 }

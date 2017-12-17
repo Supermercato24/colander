@@ -8,7 +8,7 @@ import (
 )
 
 const (
-	logExtension = ".log"
+	LogExtension = ".log"
 )
 
 type Log struct {
@@ -68,6 +68,7 @@ func LogReadLines(logFiles []string) []Log {
 }
 
 func LogWriteLines(path string, logs []Log) (err error) {
+	os.Remove(path)
 	fd, err := os.OpenFile(path, os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
 		return
