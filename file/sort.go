@@ -18,20 +18,20 @@ func (a Aggregate) Swap(i, j int) {
 func (a Aggregate) Less(i, j int) bool {
 	return a[i].Timestamp.Unix() < a[j].Timestamp.Unix()
 
-	firstDate := a[i].Timestamp
-	secondDate := a[j].Timestamp
-
-	firstDate.Unix()
-
-	fmt.Println(firstDate)
-	fmt.Println(secondDate)
-
-	return (firstDate.Year() < secondDate.Year()) &&
-		(firstDate.Month() < secondDate.Month()) &&
-		(firstDate.Day() < secondDate.Day()) &&
-		(firstDate.Hour() < secondDate.Hour()) &&
-		(firstDate.Minute() < secondDate.Minute()) &&
-		(firstDate.Second() < secondDate.Second())
+	//firstDate := a[i].Timestamp
+	//secondDate := a[j].Timestamp
+	//
+	//firstDate.Unix()
+	//
+	//fmt.Println(firstDate)
+	//fmt.Println(secondDate)
+	//
+	//return (firstDate.Year() < secondDate.Year()) &&
+	//	(firstDate.Month() < secondDate.Month()) &&
+	//	(firstDate.Day() < secondDate.Day()) &&
+	//	(firstDate.Hour() < secondDate.Hour()) &&
+	//	(firstDate.Minute() < secondDate.Minute()) &&
+	//	(firstDate.Second() < secondDate.Second())
 }
 
 func SortByTimestamp(logs []Log) []Log {
