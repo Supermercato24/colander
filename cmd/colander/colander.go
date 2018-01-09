@@ -11,14 +11,14 @@ import (
 	"github.com/supermercato24/colander/file"
 )
 
-type ColanderOptions struct {
+type colanderOptions struct {
 	dir     string
 	pattern string
 	remove  bool
 	show    bool
 }
 
-func Colander(options *ColanderOptions) {
+func colander(options *colanderOptions) {
 	var showClosure func(resultPath string, logs file.Aggregate)
 	if options.show {
 		showClosure = func(_ string, logs file.Aggregate) {

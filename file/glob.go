@@ -1,3 +1,6 @@
+// Package file implements methods for get logs from files.
+//
+// Log Finding.
 package file
 
 import (
@@ -13,15 +16,18 @@ const (
 	globPattern = "*-[0-9][0-9][0-9][0-9]*-*"
 )
 
+// GlobMatches map of Files
 type GlobMatches struct {
 	Files map[string]*FileMatches
 }
 
+// FileMatches map of Logs with same Category.
 type FileMatches struct {
 	Category string
 	Logs     map[time.Time]*LogMatches
 }
 
+// LogMatches single line of log with timestamp.
 type LogMatches struct {
 	Year  int64
 	Month int64
@@ -81,6 +87,7 @@ func splitLogFilesByName(pattern string) *GlobMatches {
 	return globMatches
 }
 
+// Glob search files into directory by pattern.
 func Glob(dirPath string, pattern string, f func(matches *GlobMatches)) {
 	// pay_debug-2017-11-15-ws02.log
 	// pay_debug-2017-11-15-ws01.log

@@ -1,9 +1,13 @@
+// Package file implements methods for get logs from files.
+//
+// Log sorting.
 package file
 
 import (
 	"sort"
 )
 
+// Aggregate extend Sort interface.
 type Aggregate []Log
 
 func (a Aggregate) Len() int {
@@ -33,6 +37,7 @@ func (a Aggregate) Less(i, j int) bool {
 	//	(firstDate.Second() < secondDate.Second())
 }
 
+// SortByTimestamp sort log by timestamp.
 func SortByTimestamp(logs []Log) []Log {
 	sort.Sort(Aggregate(logs))
 	return logs

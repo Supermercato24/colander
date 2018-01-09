@@ -13,7 +13,7 @@ import (
 )
 
 const (
-	ExIoerr = 74
+	ExIoerr = 74 // Exit Error
 )
 
 func init() {
@@ -108,7 +108,7 @@ func main() {
 			return cli.NewExitError("input DIR is not a directory", ExIoerr)
 		}
 
-		Colander(&ColanderOptions{
+		colander(&colanderOptions{
 			dir:     dir,
 			pattern: pattern,
 			remove:  remove,

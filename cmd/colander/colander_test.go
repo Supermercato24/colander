@@ -79,15 +79,15 @@ func logSetUp(t *testing.T, logNumber int) {
 	assert.NoError(t, err)
 }
 
-func withScreen(t *testing.T) {
-	Colander(&ColanderOptions{
+func withScreen(_ *testing.T) {
+	colander(&colanderOptions{
 		dir:  filepath.Join(configuration.DirBinStorage, configuration.PathLogs),
 		show: true,
 	})
 }
 
 func withoutScreen(t *testing.T) {
-	Colander(&ColanderOptions{
+	colander(&colanderOptions{
 		dir:     filepath.Join(configuration.DirBinStorage, configuration.PathLogs),
 		pattern: dailyPattern1,
 	})
@@ -119,7 +119,7 @@ func withoutScreen(t *testing.T) {
 }
 
 func withRemove(t *testing.T) {
-	Colander(&ColanderOptions{
+	colander(&colanderOptions{
 		dir:     filepath.Join(configuration.DirBinStorage, configuration.PathLogs),
 		pattern: dailyPattern1,
 		remove:  true,
@@ -157,7 +157,7 @@ func withRemove(t *testing.T) {
 }
 
 func singleWithoutScreen(t *testing.T) {
-	Colander(&ColanderOptions{
+	colander(&colanderOptions{
 		dir:     filepath.Join(configuration.DirBinStorage, configuration.PathLogs),
 		pattern: dailyPattern0,
 	})
@@ -190,7 +190,7 @@ func singleWithoutScreen(t *testing.T) {
 }
 
 func singleWithRemove(t *testing.T) {
-	Colander(&ColanderOptions{
+	colander(&colanderOptions{
 		dir:     filepath.Join(configuration.DirBinStorage, configuration.PathLogs),
 		pattern: dailyPattern0,
 		remove:  true,

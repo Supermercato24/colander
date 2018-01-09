@@ -10,8 +10,8 @@ import (
 )
 
 const (
-	Name    = "colander"
-	Version = "0.0.0"
+	Name    = "colander" // project name
+	Version = "0.2.0"    // project version
 )
 
 func init() {

@@ -1,3 +1,6 @@
+// Package file implements methods for get logs from files.
+//
+// Log structure.
 package file
 
 import (
@@ -12,6 +15,7 @@ const (
 	NewLine      = '\n'
 )
 
+// Log is a single transaction by timestamp.
 type Log struct {
 	Timestamp time.Time
 	Body      []byte
@@ -34,6 +38,7 @@ func detectTimestamp(line []byte) (timestampDetected time.Time) {
 	return
 }
 
+// LogReadLines read lines of log file.
 func LogReadLines(logFiles []string) []Log {
 	var logs []Log
 
@@ -67,6 +72,7 @@ func LogReadLines(logFiles []string) []Log {
 	return logs
 }
 
+// LogWriteLines write lines into log file.
 func LogWriteLines(path string, logs []Log) (err error) {
 	os.Remove(path)
 	fd, err := os.OpenFile(path, os.O_CREATE|os.O_WRONLY, 0644)
