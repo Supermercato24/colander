@@ -8,8 +8,8 @@ import (
 	"os"
 	"strings"
 
+	"github.com/supermercato24/colander/config"
 	"github.com/urfave/cli"
-	"supermercato24.it/colander/config"
 )
 
 const (

@@ -8,7 +8,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"supermercato24.it/colander/file"
+	"github.com/supermercato24/colander/file"
 )
 
 type ColanderOptions struct {

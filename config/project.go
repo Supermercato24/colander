@@ -6,7 +6,7 @@ package config
 import (
 	"path/filepath"
 
-	"supermercato24.it/configuration"
+	"github.com/supermercato24/configuration"
 )
 
 const (

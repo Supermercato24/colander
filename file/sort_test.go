@@ -7,8 +7,8 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"supermercato24.it/colander/config"
-	"supermercato24.it/configuration"
+	"github.com/supermercato24/colander/config"
+	"github.com/supermercato24/configuration"
 )
 
 func TestSortByTimestamp(t *testing.T) {
