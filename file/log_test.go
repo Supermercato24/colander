@@ -12,10 +12,12 @@ import (
 )
 
 const (
-	numberOfLines = 18
-	dailyLogFile0 = "d2-2017-12-11.log"
-	dailyLogFile1 = "d2-2017-12-11-ws01.log"
-	dailyLogFile2 = "d2-2017-12-11-ws02.log"
+	numberOfLines   = 18
+	dailyLogFile0   = "d2-2017-12-11.log"
+	dailyLogFile1   = "d2-2017-12-11-ws01.log"
+	dailyLogFile2   = "d2-2017-12-11-ws02.log"
+	dailyLogFile3   = "day-2017-12-11.log"
+	monthlyLogFile0 = "month-2017-12.log"
 )
 
 var (
@@ -81,6 +83,12 @@ func logSetUp(t *testing.T, logNumber int) {
 		dailyLogBody = dailyLogBody1
 	case 2:
 		dailyLogFile = dailyLogFile2
+		dailyLogBody = dailyLogBody2
+	case 3:
+		dailyLogFile = dailyLogFile3
+		dailyLogBody = dailyLogBody2
+	case 4:
+		dailyLogFile = monthlyLogFile0
 		dailyLogBody = dailyLogBody2
 	}
 	assert.NotEmpty(t, dailyLogFile)

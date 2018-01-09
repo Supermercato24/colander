@@ -11,9 +11,7 @@ import (
 	"github.com/supermercato24/configuration"
 )
 
-func TestSortByTimestamp(t *testing.T) {
-	assert.Exactly(t, config.Name, config.Name, "load init")
-
+func sortByTimestampWithoutPattern(t *testing.T) {
 	Glob(filepath.Join(configuration.DirBinStorage, configuration.PathLogs), "", func(matches *GlobMatches) {
 		match := matches.Files[dailyLog1]
 		assert.Exactly(t, dailyLog1, match.Category)
@@ -80,7 +78,9 @@ func TestSortByTimestamp(t *testing.T) {
 			break
 		}
 	})
+}
 
+func sortByTimestampWithPattern(t *testing.T) {
 	Glob(filepath.Join(configuration.DirBinStorage, configuration.PathLogs), "*2017-12-11*.log", func(matches *GlobMatches) {
 		match := matches.Files[dailyLog1]
 		assert.Exactly(t, dailyLog1, match.Category)
@@ -141,4 +141,15 @@ func TestSortByTimestamp(t *testing.T) {
 			fd.Close()
 		}
 	})
+}
+
+func TestSort(t *testing.T) {
+	assert.Exactly(t, config.Name, config.Name, "load init")
+
+	assert.True(t, t.Run("setUp0", func(t *testing.T) { logSetUp(t, 0) }))
+	assert.True(t, t.Run("setUp1", func(t *testing.T) { logSetUp(t, 1) }))
+	assert.True(t, t.Run("setUp2", func(t *testing.T) { logSetUp(t, 2) }))
+
+	assert.True(t, t.Run("sortByTimestampWithoutPattern", sortByTimestampWithoutPattern))
+	assert.True(t, t.Run("sortByTimestampWithPattern", sortByTimestampWithPattern))
 }

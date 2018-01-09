@@ -16,10 +16,9 @@ const (
 	monthlyLog0 = "month"
 )
 
-func TestGlob(t *testing.T) {
+func globLogs(t *testing.T) {
 	var day, d2, month bool
 
-	assert.Exactly(t, config.Name, config.Name, "load init")
 	Glob(filepath.Join(configuration.DirBinStorage, configuration.PathLogs), "", func(matches *GlobMatches) {
 		for filesKey, match := range matches.Files {
 			if filesKey == dailyLog0 {
@@ -54,4 +53,14 @@ func TestGlob(t *testing.T) {
 	assert.True(t, day)
 	assert.True(t, d2)
 	assert.True(t, month)
+}
+
+func TestGlob2(t *testing.T) {
+	assert.Exactly(t, config.Name, config.Name, "load init")
+
+	assert.True(t, t.Run("setUp0", func(t *testing.T) { logSetUp(t, 0) }))
+	assert.True(t, t.Run("setUp3", func(t *testing.T) { logSetUp(t, 3) }))
+	assert.True(t, t.Run("setUp4", func(t *testing.T) { logSetUp(t, 4) }))
+
+	assert.True(t, t.Run("globLogs", globLogs))
 }
