@@ -3,6 +3,7 @@ language: go
 python:
   - "1.9"
   - "tip"
+go_import_path: github.com/supermercato24/colander
 script:
   - go test -race -v ./...
 notifications:
