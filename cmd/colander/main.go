@@ -13,7 +13,8 @@ import (
 )
 
 const (
-	ExIoerr = 74 // Exit Error
+	// ExIoerr exit Error
+	ExIoerr = 74
 )
 
 func init() {
@@ -52,8 +53,8 @@ func main() {
 	app.Name = config.Name
 	app.Version = config.Version
 	app.Usage = "aggregate logs"
-	//app.HideHelp = true
-	//app.EnableBashCompletion = true
+	// app.HideHelp = true
+	// app.EnableBashCompletion = true
 	app.Flags = []cli.Flag{
 		cli.StringFlag{
 			Name:        "d, dir",

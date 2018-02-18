@@ -11,8 +11,11 @@ import (
 )
 
 const (
-	LogExtension = ".log" // log extension
-	NewLine      = '\n'   // log newline
+	// LogExtension of logs
+	LogExtension = ".log"
+
+	// NewLine of logs
+	NewLine = '\n'
 )
 
 // Log is a single transaction by timestamp.

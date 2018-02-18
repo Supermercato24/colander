@@ -10,26 +10,29 @@ import (
 // Aggregate extend Sort interface.
 type Aggregate []Log
 
+// Len expose length of sorting
 func (a Aggregate) Len() int {
 	return len(a)
 }
 
+// Swap elements
 func (a Aggregate) Swap(i, j int) {
 	a[i], a[j] = a[j], a[i]
 }
 
+// Less confront different elements
 func (a Aggregate) Less(i, j int) bool {
 	return a[i].Timestamp.Unix() < a[j].Timestamp.Unix()
 
-	//firstDate := a[i].Timestamp
-	//secondDate := a[j].Timestamp
+	// firstDate := a[i].Timestamp
+	// secondDate := a[j].Timestamp
 	//
-	//firstDate.Unix()
+	// firstDate.Unix()
 	//
-	//fmt.Println(firstDate)
-	//fmt.Println(secondDate)
+	// fmt.Println(firstDate)
+	// fmt.Println(secondDate)
 	//
-	//return (firstDate.Year() < secondDate.Year()) &&
+	// return (firstDate.Year() < secondDate.Year()) &&
 	//	(firstDate.Month() < secondDate.Month()) &&
 	//	(firstDate.Day() < secondDate.Day()) &&
 	//	(firstDate.Hour() < secondDate.Hour()) &&

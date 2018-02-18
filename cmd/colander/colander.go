@@ -56,25 +56,25 @@ func colander(options *colanderOptions) {
 	file.Glob(options.dir, options.pattern, func(matches *file.GlobMatches) {
 		for _, match := range matches.Files {
 			category := match.Category
-			for _, match := range match.Logs {
-				date := match.Time.Format("2006-01")
+			for _, log := range match.Logs {
+				date := log.Time.Format("2006-01")
 
-				logs := file.LogReadLines(match.Paths)
+				logs := file.LogReadLines(log.Paths)
 				file.SortByTimestamp(logs)
 
 				var resultPath string
 				if !options.show {
 					resultPath = fmt.Sprintf("%s-%s", category, date)
-					if match.Day != int64(0) {
-						resultPath = fmt.Sprintf("%s-%d", resultPath, match.Time.Day())
+					if log.Day != int64(0) {
+						resultPath = fmt.Sprintf("%s-%d", resultPath, log.Time.Day())
 					}
 					resultPath = fmt.Sprintf("%s%s", resultPath, file.LogExtension)
 					resultPath = filepath.Join(options.dir, resultPath)
 				}
 
 				showClosure(resultPath, logs)
-				if len(match.Paths) > 1 {
-					removeClosure(resultPath, match.Paths)
+				if len(log.Paths) > 1 {
+					removeClosure(resultPath, log.Paths)
 				}
 			}
 		}
